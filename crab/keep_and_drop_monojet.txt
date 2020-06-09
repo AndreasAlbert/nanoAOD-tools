@@ -133,6 +133,7 @@ keep Flag_*
 keep btagWeight_*
 keep genWeight
 keep Generator_*
+keep GenModel_*
 keep Pileup_*
 keep puWeight*
 keep Prefire*
