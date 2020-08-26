@@ -17,6 +17,7 @@ from PhysicsTools.NanoAODTools.postprocessing.modules.common.collectionMerger im
 from PhysicsTools.NanoAODTools.postprocessing.modules.common.puWeightProducer import puAutoWeight_2016, puAutoWeight_2017, puAutoWeight_2018
 from PhysicsTools.NanoAODTools.postprocessing.modules.jme.jetmetHelperRun2 import createJMECorrector
 
+import PSet
 
 def filter_electrons(electron):
     return (electron.pt>9.9) and (electron.cutBased > 0)
@@ -58,7 +59,7 @@ jsons = {
 def read_options():
     # Loop over input arguments
     options = {}
-    prefixes = ['dataset', 'ismc', 'year','nofilter','test','file']
+    prefixes = ['dataset', 'ismc', 'year','nofilter','test','file','nocrab']
     for argument in sys.argv:
         for prefix in prefixes:
             if argument.startswith(prefix):
@@ -71,6 +72,7 @@ def read_options():
     options['ismc'] = options['ismc'].lower() == "true"
     options['nofilter'] = options['nofilter'].lower() == "true"
     options['test'] = options['test'].lower() == "true"
+    options['nocrab'] = options['nocrab'].lower() == "true"
 
     return options
 
@@ -80,6 +82,9 @@ def main():
     if options['test']:
         files = [options['file']]
         maxEntries = 1000
+    elif options['nocrab']:
+        files = [x for x in sys.argv if x.endswith(".root")]
+        maxEntries = 0
     else:
         files = inputFiles()
         maxEntries = 0
