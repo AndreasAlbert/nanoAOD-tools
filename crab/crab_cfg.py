@@ -66,10 +66,10 @@ def short_name(dataset):
     name = name.replace("powheg","pow")
 
     # Detect extension
-    m=re.match(r".*(ext\d+).*",conditions);
+    m=re.match(r".*(ext\d+).*",conditions)
     if m:
         name = name + "_" + m.groups()[0]
-    m=re.match(r".*(ver\d+).*",conditions);
+    m=re.match(r".*(ver\d+).*",conditions)
     if m:
         name = name + "_" + m.groups()[0]
     if 'new_pmx' in conditions:
@@ -83,8 +83,13 @@ def short_name(dataset):
 
     m = re.match(r"Run(\d+[A-Z]*)", conditions)
     if m:
-        name = name + "_" + m.groups()[0]
+        run = m.groups()[0]
 
+        m = re.match(".*-v(\d+)", conditions)
+        if m:
+            name = name + "_ver{0}".format(m.groups()[0])
+        
+        name = name + "_" + run
     return name
 
 tag = "09Jun20v7"
